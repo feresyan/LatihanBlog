@@ -8,6 +8,10 @@ use App\Category;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 	public function index()
 	{
@@ -15,6 +19,12 @@ class PostController extends Controller
 
 		return view('post.index', compact('posts'));
 	}
+
+    public function show($id)
+    {
+        $post = Post::find($id);
+        return view('post.show', compact('post'));
+    }
 
     public function create()
     {
@@ -24,6 +34,12 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+
+        $this->validate(request(),[
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
     	Post::create([
     		'title' => $request->title,
     		'content' => $request->content,

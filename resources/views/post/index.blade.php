@@ -3,7 +3,6 @@
 @section('title','Index')
 
 @section('content')
-
 	<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -12,7 +11,7 @@
             	<div class="card card-default">
                 	
                     <div class="card-header">
-                        {{ $post->title }}
+                        <a href=" {{ route('post.show', $post->id) }} " class="badge badge-light" ><h5>{{ $post->title }}</h7></a>
                         
                        <div class="float-right">
                             <form action=" {{ route('post.destroy',$post->id) }} " method="post">
@@ -23,14 +22,15 @@
                        </div>
 
                         <div class="float-right">
-                            <form action=" {{ route('post.edit', $post->id) }} ">
+                            <form action=" {{ route('post.edit', $post->id) }}" method="put">
+                                {{ method_field('PUT') }}
                                 <button class="btn btn-sm btn-primary">Edit</button>
                             </form>
                         </div>
                     </div>
 	                
                     <div class="card-body">
-	                  <p> {{ $post->content }} </p> 
+	                  <p> {{ str_limit($post->content,100,'...') }} </p> 
 	                   
                     </div>
             	</div> <br>
